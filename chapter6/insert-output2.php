@@ -1,0 +1,27 @@
+<?php require '../header.php'; 
+
+	if (empty($_REQUEST['name'])) {
+		echo '商品名を入力してください。';
+
+	} elseif (!preg_match('/[0-9]+/', $_REQUEST['price'])) {
+		echo '商品価格を整数で入力してください。';
+		
+	} else {
+
+	$sql=$pdo->prepare(
+		"INSERT into product values(null, ?, ? )"
+	);
+
+	$success = $sql->execute([
+		$_REQUEST['name'] , 
+		$_REQUEST['price']
+	]);
+
+		if($success){
+			echo '追加に成功しました。';
+		}else{
+			echo '追加に失敗しました。';
+		}
+}
+?>
+<?php require '../footer.php'; ?>
